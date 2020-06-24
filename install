@@ -12,6 +12,8 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ALL_ARGS=$@
 CLEAN=false
 UPDATE=false
+NAME=''
+EMAIL=''
 SHOW_HELP=false
 VERBOSE=false
 while [[ $# -gt 0 ]]; do
@@ -23,6 +25,16 @@ while [[ $# -gt 0 ]]; do
     ;;
     --update|-u)
     UPDATE=true
+    shift
+    ;;
+    -n|--name)
+    NAME="$2"
+    shift
+    shift
+    ;;
+    -e|--email)
+    EMAIL="$2"
+    shift
     shift
     ;;
     --help|-h)
@@ -47,9 +59,12 @@ Usage:
   `readlink -f $0` [flags]
 
 Flags:
-  -u, --update                                       Will download and install/reinstall even if the tools are already installed
-      --verbose                                      Show verbose output
-  -h, --help                                         This help
+  -n, --name               Name to use when configuring Git.
+  -e, --email              Email to use when configuring Git.
+  -c, --clean              Will clean installed packages.
+  -u, --update             Will download and install/reinstall even if the tools are already installed
+      --verbose            Show verbose output
+  -h, --help               This help
 EOF
   exit 0
 fi
@@ -57,6 +72,19 @@ fi
 if $VERBOSE; then
   echo Running `basename "$0"` $ALL_ARGS
   echo Update is $UPDATE
+fi
+
+if [ "$NAME" == "" ]; then
+  if ! hash git 2>/dev/null || [[ `git config --global user.name` == "" ]] || [[ `git config --global user.name` == "placeholder" ]]; then
+    >&2 echo Name is required.
+    exit 2
+  fi
+fi
+if [ "$EMAIL" == "" ]; then
+  if ! hash git 2>/dev/null || [[ `git config --global user.email` == "" ]] || [[ `git config --global user.email` == "placeholder@lambda3.com.br" ]]; then
+    >&2 echo Email is required.
+    exit 2
+  fi
 fi
 
 pushd "${BASEDIR}" > /dev/null

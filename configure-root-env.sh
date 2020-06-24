@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 if [ "$EUID" != "0" ]; then
   echo "Please run this script as root"
   exit 2
@@ -10,6 +12,8 @@ fi
 ALL_ARGS=$@
 SHOW_HELP=false
 VERBOSE=false
+VIM=false
+NO_VIM=false
 while [[ $# -gt 0 ]]; do
   key="$1"
   case $key in
@@ -19,6 +23,14 @@ while [[ $# -gt 0 ]]; do
     ;;
     --verbose)
     VERBOSE=true
+    shift
+    ;;
+    --vim)
+    VIM=true
+    shift
+    ;;
+    --no-vim|--novim)
+    NO_VIM=true
     shift
     ;;
     *)
@@ -35,7 +47,8 @@ Usage:
   `readlink -f $0` [flags]
 
 Flags:
-  -u, --update             Will download and install/reinstall even if the tools are already installed
+      --vim                Will configure to use Vim as default editor.
+      --no-vim             Will remove Vim configuration as default editor.
       --verbose            Show verbose output
   -h, --help               help
 EOF
@@ -44,6 +57,8 @@ fi
 
 if $VERBOSE; then
   echo Running `basename "$0"` $ALL_ARGS
+  echo Vim is $VIM
+  echo No Vim is $NO_VIM
 fi
 
 if ! [[ `locale -a` =~ 'en_US.utf8' ]]; then
@@ -88,4 +103,11 @@ if $WSL; then
   fi
 fi
 
-setAlternative editor /usr/bin/vim.basic
+if $NO_VIM; then
+  rm -f $BASEDIR/.vim.as.default.editor
+fi
+if $VIM || [ -f $BASEDIR/.vim.as.default.editor ]; then
+  setAlternative editor /usr/bin/vim.basic
+  touch $BASEDIR/.vim.as.default.editor
+  touch $BASEDIR/bashscripts/.vim.as.default.editor
+fi

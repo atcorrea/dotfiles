@@ -27,7 +27,6 @@
       if: '[ `pwd` != "$HOME/.dotfiles" ]'
     ~/.vim: vimfiles
     ~/.rbenv: tools/rbenv
-    ~/.config/powershell: poshfiles
     ~/.config/git: config/git
     ~/.bashrc:
       path: .bashrc
