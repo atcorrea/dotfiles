@@ -56,7 +56,7 @@ EOF
 fi
 
 if $VERBOSE; then
-  echo Running `basename "$0"` $ALL_ARGS
+  echo -e "\e[32mRunning `basename "$0"` $ALL_ARGS\e[0m"
   echo Name is $NAME
   echo Email is $EMAIL
 fi
