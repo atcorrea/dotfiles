@@ -59,6 +59,8 @@ Usage:
   `readlink -f $0` [flags]
 
 Flags:
+      --vim                Will configure to use Vim as default editor.
+      --no-vim             Will remove Vim configuration as default editor.
   -n, --name               Name to use when configuring Git.
   -e, --email              Email to use when configuring Git.
   -c, --clean              Will clean installed packages.
