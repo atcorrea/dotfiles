@@ -4,9 +4,6 @@
 [submodule "bashscripts"]
 	path = bashscripts
 	url = ../bashscripts.git
-[submodule "poshfiles"]
-	path = poshfiles
-	url = ../poshfiles.git
 [submodule "vimfiles"]
 	path = vimfiles
 	url = ../vimfiles.git
