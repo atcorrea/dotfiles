@@ -1,10 +1,34 @@
-# Giovani Bassi's Dotfiles
+# Lambda3's Dotfiles
 
-These are the dotfiles. I'm using
+These are base dotfiles we use at Lambda3. We're using
 [Dotbot](https://github.com/anishathalye/dotbot)
 to automate it.
 
+## Command line options
+
+You can supply several options, run `.dotfiles/install --help` to see them.
+
 ## Installation
+
+### Fork it
+
+Fork it to your own user in Github, and make the changes you want. You will also
+need to fork these repositories:
+
+* https://github.com/Lambda3/bashscripts
+* https://github.com/Lambda3/vimfiles
+
+Then clone your repo with submodules (with ssh or HTTPS):
+
+````bash
+git clone --recurse-submodules git@github.com:lambda3/dotfiles.git $HOME/.dotfiles
+````
+
+Make your customizations, save, commit, push.
+
+Then run the install script `~/.dotfiles/install`.
+
+### Use it directly (not recommended)
 
 *Note:* Some files and directories from the home directory will be removed. Check the
 [install.conf.yaml](https://github.com/lambda3/dotfiles/blob/master/install.conf.yaml)
@@ -32,16 +56,9 @@ git clone --recurse-submodules https://github.com/lambda3/dotfiles $HOME/.dotfil
 
 Remove all directories that will be replaced by the submodules.
 
-## Forking
+## Contributors
 
-You will need to take into consideration that this project uses submodules by
-the same author, so you will need to fork those repositories first.
-To learn which repositories are being used open at the [.gitmodules]() files and
-look for relative submodules (that start with `..`).
-
-## Author
-
-[Giovanni Bassi](https://twitter.com/giovannibassi)
+See them [here](https://github.com/Lambda3/dotfiles/graphs/contributors).
 
 ## License
 
